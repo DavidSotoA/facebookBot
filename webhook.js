@@ -5,15 +5,19 @@ const app = express();
 var fs = require('fs');
 var http = require('http');
 var https = require('https');
-var privateKey  = fs.readFileSync('sslcert/server.key', 'utf8');
-var certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
+var privateKey  = fs.readFileSync('server-key.pem', 'utf8');
+var certificate = fs.readFileSync('server-cert.pem', 'utf8');
+
+var options = {
+  key: privateKey,
+  cert: certificate
+}
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const server = app.listen(process.env.PORT || 80, () => {
-  console.log('Express server listening on port %d in %s mode', server.address().port, app.settings.env);
-});
+https.createServer(options, app).listen(8000);
+
 
 /* For Facebook Validation */
 app.get('/webhook', (req, res) => {
