@@ -1,23 +1,28 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const app = express();
+const express = require('express'),
+      bodyParser = require('body-parser'),
+      fs = require('fs'),
+      http = require('http'),
+      https = require('https');
 
-var fs = require('fs');
-var http = require('http');
-var https = require('https');
-var privateKey  = fs.readFileSync('server-key.pem', 'utf8');
-var certificate = fs.readFileSync('server-cert.pem', 'utf8');
+var app = express();
+var port_http = 443,
+    port_https = 80;
 
 var options = {
-  key: privateKey,
-  cert: certificate
+  key: fs.readFileSync('ssl/client-key.pem', 'utf8'),
+  cert: fs.readFileSync('ssl/client-cert.pem', 'utf8')
 }
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-https.createServer(options, app).listen(8000);
+http.createServer(app).listen(port_http , () => {
+    console.log('Express server http listening on port %d in %s mode', port_http, app.settings.env);
+});
 
+https.createServer(options, app).listen(port_https, () =>{
+     console.log('Express server https listening on port %d in %s mode', port_https, app.settings.env);
+});
 
 /* For Facebook Validation */
 app.get('/webhook', (req, res) => {
