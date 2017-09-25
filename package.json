@@ -1,0 +1,24 @@
+{
+  "name": "facebook_bot",
+  "version": "1.0.0",
+  "description": "example bot for facebook messenger",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidSotoA/facebookBot.git"
+  },
+  "keywords": [
+    "bot",
+    "messenger",
+    "facebook"
+  ],
+  "author": "David Soto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DavidSotoA/facebookBot/issues"
+  },
+  "homepage": "https://github.com/DavidSotoA/facebookBot#readme"
+}
